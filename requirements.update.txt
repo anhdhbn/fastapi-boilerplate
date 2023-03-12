@@ -1,0 +1,13 @@
+fastapi[all]
+uvicorn[standard]
+sqlalchemy
+alembic
+mysqlclient
+python-dotenv
+pyhumps
+asgi-correlation-id
+orjson
+pytest
+pytest-cov
+isort
+black

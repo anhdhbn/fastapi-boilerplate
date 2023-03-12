@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mysql:8
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    volumes:
+      - $PWD/.docker/db/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+    restart: unless-stopped
+
+  app:
+    build: .
+    environment:
+      SQL_DATABASE_URL: mysql+mysqldb://root:${DB_PASSWORD}@mysql:3306/${DB_NAME}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+    ports:
+      - ${APP_PORT}:8000
