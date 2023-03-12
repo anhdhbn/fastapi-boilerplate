@@ -11,3 +11,10 @@ pytest
 pytest-cov
 isort
 black
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-logging
+opentelemetry-instrumentation-sqlalchemy
+opentelemetry-exporter-jaeger-thrift
+opentelemetry-exporter-jaeger-proto-grpc

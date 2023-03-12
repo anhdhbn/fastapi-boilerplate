@@ -13,6 +13,7 @@ from app.helpers.exception_handler import (CustomException,
                                            fastapi_error_handler,
                                            http_exception_handler,
                                            validation_exception_handler)
+from app.helpers.jaeger import setup_jaeger_app
 from app.middlewares.log_request import LogRequestMiddleware
 
 logging.config.dictConfig(LOGGING_CONF)
@@ -39,6 +40,9 @@ def get_application() -> FastAPI:
     application.add_exception_handler(CustomException, http_exception_handler)
     application.add_exception_handler(RequestValidationError, validation_exception_handler)
     application.add_exception_handler(Exception, fastapi_error_handler)
+
+    if settings.JAEGER_ENABLED and settings.JAEGER_MODE:
+        setup_jaeger_app(app=application)
 
     return application
 

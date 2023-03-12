@@ -4,6 +4,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from app.core.dependencies import lang_header
+from app.helpers.decorators import inject_jaeger_to_class
 from app.helpers.exception_handler import CustomException
 from app.i18n.errors import ErrorCode
 from app.i18n.lang import MultiLanguage
@@ -11,6 +12,7 @@ from app.repositories.db import get_session
 
 logger = logging.getLogger(__name__)
 
+@inject_jaeger_to_class()
 class Provider:
     def __init__(self, session: Session = Depends(get_session), lang: MultiLanguage = Depends(lang_header)):
         self.session = session

@@ -3,15 +3,19 @@ import unittest
 from typing import Any, Generator
 
 import pytest
-from app.core.config import settings
-from app.main import get_application
-from app.models.base_model import BareBaseModel  # noqa
-from app.repositories.db import get_session
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
+
+from app.core.config import settings
+
+settings.JAEGER_ENABLED = False # force disable jaeger on testing
+
+from app.main import get_application
+from app.models.base_model import BareBaseModel  # noqa
+from app.repositories.db import get_session
 
 load_dotenv(verbose=True)
 
